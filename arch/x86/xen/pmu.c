@@ -3,6 +3,7 @@
 #include <linux/interrupt.h>
 
 #include <asm/xen/hypercall.h>
+#include <xen/xen.h>
 #include <xen/page.h>
 #include <xen/interface/xen.h>
 #include <xen/interface/vcpu.h>
@@ -478,7 +479,7 @@ static void xen_convert_regs(const struct xen_pmu_regs *xen_regs,
 irqreturn_t xen_pmu_irq_handler(int irq, void *dev_id)
 {
 	int err, ret = IRQ_NONE;
-	struct pt_regs regs;
+	struct pt_regs regs = {0};
 	const struct xen_pmu_data *xenpmu_data = get_xenpmu_data();
 	uint8_t xenpmu_flags = get_xenpmu_flags();
 
